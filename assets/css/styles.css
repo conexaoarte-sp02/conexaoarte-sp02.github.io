@@ -315,6 +315,7 @@ body::-webkit-scrollbar-track {
     }
     .links-slider ul li {
         min-width: 50px;
+        color: #333;
     }
     .links-slider ul li:nth-child(5) {
         text-align: center;
@@ -322,8 +323,7 @@ body::-webkit-scrollbar-track {
     .links-slider li > a {
         font-size: 9px;
         font-family: "Montserrat-light";        
-        padding-bottom: 5px;
-        color: "#333";
+        padding-bottom: 5px;        
     }
     .links-slider li > a.active {
         border-bottom: 3px solid red;
