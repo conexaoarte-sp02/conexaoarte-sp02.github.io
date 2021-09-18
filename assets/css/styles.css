@@ -321,9 +321,9 @@ body::-webkit-scrollbar-track {
     }
     .links-slider li > a {
         font-size: 9px;
-        font-family: "Montserrat-light";
-        color: "#AFAFAF";
+        font-family: "Montserrat-light";        
         padding-bottom: 5px;
+        color: "#333";
     }
     .links-slider li > a.active {
         border-bottom: 3px solid red;
