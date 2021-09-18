@@ -12,7 +12,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/o5oqNtZZo2dmugkCA"
 }, {
     category: [3],
     name: "Theatro Municipal",
@@ -27,7 +28,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/9d1rRj583Jbv7H4JA"
 }, {
     category: [1, 3],
     name: "Museu do Videogame",
@@ -42,7 +44,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/HyHmZknqwoZDHccCA"
 }, {
     category: [3],
     name: "Parque Ibirapuera",
@@ -57,7 +60,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/1mAXkMP1m2KbySWaA"
 }, {
     category: [4],
     name: "Autódromo de Interlagos",
@@ -72,7 +76,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/752uFkSKjuCVfoC89"
 }, {
     category: [2, 3],
     name: "Beco do Batman",
@@ -88,7 +93,7 @@ const myDatabase = [{
         inteira: 0,
         meia: 0
     },
-    link: "https://goo.gl/maps/TEMQcPVo2xDXyJJ49"
+    link: "https://goo.gl/maps/qfcy6sKb4yFdroKL8"
 }, {
     category: [2],
     name: "Pinacoteca de São Paulo",
@@ -103,7 +108,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/29GxZUXT8Jav5rf38"
 }, {
     category: [3],
     name: "Aquário de São Paulo",
@@ -118,7 +124,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/fZkFGdw3EvXfk9sM6"
 }, {
     category: [3],
     name: "Avenida Paulista",
@@ -133,7 +140,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/gDchYCW8ciwRmTrp8"
 }, {
     category: [5],
     name: "Mercado Municipal de São Paulo",
@@ -148,7 +156,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/vypLD1uuwKdcTJPr5"
 }, {
     category: [5],
     name: "Restaurante Président - Chef Érick Jacquin",
@@ -163,7 +172,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://g.page/president-jacquin?share"
 }, {
     category: [1, 4],
     name: "Museu do Futebol",
@@ -178,7 +188,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/M7tGvcYAm5Tp6ChE7"
 }, {
     category: [1, 3],
     name: "Museu do Ipiranga",
@@ -193,7 +204,8 @@ const myDatabase = [{
     ingresso: {
         inteira: 0,
         meia: 0
-    }
+    },
+    link: "https://goo.gl/maps/61WZCMT5jFwEzftQ9"
 }];
 
 function createBlock(galleryElement, location) {
@@ -230,7 +242,7 @@ function createBlock(galleryElement, location) {
 
     card.querySelector("h2").addEventListener("click", () => {
 
-        window.open(`https://www.google.com/maps/search/?api=1&query=${location.longitudeLatitude}`, "_blank");
+        window.open(location.link, "_blank");
 
     });
 
