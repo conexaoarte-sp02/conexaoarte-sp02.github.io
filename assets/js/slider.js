@@ -1,3 +1,4 @@
+/*
 const myDatabase = [{
     category: [1],
     name: "Museu de Arte de São Paulo",
@@ -207,6 +208,9 @@ const myDatabase = [{
     },
     link: "https://goo.gl/maps/61WZCMT5jFwEzftQ9"
 }];
+*/
+
+let myDatabase = [];
 
 function createBlock(galleryElement, location) {
 
@@ -216,7 +220,7 @@ function createBlock(galleryElement, location) {
 
     card.innerHTML = `
         <div class="gallery-picture">
-            <img src="${location.urlImage}" alt="${location.name}" />
+            <img src="assets/images/gallery/${location.image}" alt="${location.name}" />
             <div class="gallery-ellipse">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 26.6875L13.1875 25.0375C6.75 19.2 2.5 15.35 2.5 10.625C2.5 6.775 5.525 3.75 9.375 3.75C11.55 3.75 13.6375 4.7625 15 6.3625C16.3625 4.7625 18.45 3.75 20.625 3.75C24.475 3.75 27.5 6.775 27.5 10.625C27.5 15.35 23.25 19.2 16.8125 25.05L15 26.6875Z" fill="#AFAFAF"/>
@@ -228,7 +232,7 @@ function createBlock(galleryElement, location) {
             <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 0C3.13 0 0 3.13 0 7C0 12.25 7 20 7 20C7 20 14 12.25 14 7C14 3.13 10.87 0 7 0ZM7 9.5C5.62 9.5 4.5 8.38 4.5 7C4.5 5.62 5.62 4.5 7 4.5C8.38 4.5 9.5 5.62 9.5 7C9.5 8.38 8.38 9.5 7 9.5Z" fill="#AFAFAF"/>
             </svg>
-            <h3>${location.city} - ${location.state}</h3>
+            <h3>São Paulo - SP</h3>
         </div>
     `;
 
@@ -258,7 +262,7 @@ function createGallery(database, galleryEl, filter = 0) {
 
         database = database.filter((item) => {
 
-            return item.category.includes(Number(filter));
+            return item.categoryId.includes(Number(filter));
 
         });
 
@@ -331,30 +335,77 @@ function removeActive(elements) {
     });
 }
 
-const linksGallery = document.querySelectorAll(".links-slider a");
+// AXIOS
+const apiUrl = "https://besp.westus3.cloudapp.azure.com";
 
-linksGallery.forEach(element => {
+async function getPlaces() {
 
-    element.addEventListener("click", (e) => {
+    const response = await axios.get(`${apiUrl}/places`);
 
-        e.preventDefault();
+    myDatabase = response.data;
 
-        const container = element.closest("div.carousel-container");
+    document.querySelectorAll(".carousel-gallery").forEach((el) => {
 
-        const currentGallery = container.querySelector(".carousel-gallery");
-
-        removeActive(linksGallery);
-
-        element.classList.add("active");
-
-        $(currentGallery).slick("unslick");
-
-        currentGallery.innerHTML = "";
-
-        createGallery(myDatabase, currentGallery, element.dataset.location);
-
-        initSlider();
+        createGallery(myDatabase, el);
 
     });
 
-});
+}
+
+getPlaces();
+
+async function getCategories() {
+
+    const response = await axios.get(`${apiUrl}/categories`);
+
+    const categories = response.data;
+
+    const ulCategories = document.createElement("ul");
+
+    categories.forEach((category) => {
+
+        const liCategory = document.createElement("li");
+
+        liCategory.innerHTML = `
+            <a href="#" data-location="${category.id}">${category.name}</a>
+        `;
+
+        const linkElement = liCategory.querySelector("a");
+
+        linkElement.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            const container = linkElement.closest("div.carousel-container");
+
+            const currentGallery = container.querySelector(".carousel-gallery");
+
+            document.querySelectorAll(".carousel-container .links-slider a").forEach((element) => {
+                element.classList.remove("active");
+            });
+
+            linkElement.classList.add("active");
+
+            $(currentGallery).slick("unslick");
+
+            currentGallery.innerHTML = "";
+
+            const categoryId = (category.id !== 1) ? category.id : 0;
+
+            createGallery(myDatabase, currentGallery, categoryId);
+
+            initSlider();
+
+        });
+
+        ulCategories.appendChild(liCategory);
+
+    });
+
+    const divElement = document.querySelector(".carousel-container .links-slider");
+
+    divElement.appendChild(ulCategories);
+
+}
+
+getCategories();
