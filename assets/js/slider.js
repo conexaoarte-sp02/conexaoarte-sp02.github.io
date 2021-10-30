@@ -246,7 +246,7 @@ function createBlock(galleryElement, location) {
 
     card.querySelector("h2").addEventListener("click", () => {
 
-        window.open(location.link, "_blank");
+        window.open(location.site, "_blank");
 
     });
 
