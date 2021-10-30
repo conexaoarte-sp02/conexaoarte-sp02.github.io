@@ -321,12 +321,6 @@ function initSlider() {
 
 }
 
-$(document).on("ready", function() {
-
-    initSlider();
-
-});
-
 function removeActive(elements) {
     elements.forEach(el => {
         if (el.classList.contains("active")) {
@@ -350,6 +344,8 @@ async function getPlaces() {
 
     });
 
+    initSlider();
+
 }
 
 getPlaces();
@@ -371,6 +367,10 @@ async function getCategories() {
         `;
 
         const linkElement = liCategory.querySelector("a");
+        
+        if (category.id === 1) {
+            linkElement.classList.add("active");
+        }        
 
         linkElement.addEventListener("click", (e) => {
 
