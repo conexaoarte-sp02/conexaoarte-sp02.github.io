@@ -1,4 +1,3 @@
-/*
 const myDatabase = [{
     category: [1],
     name: "Museu de Arte de São Paulo",
@@ -208,9 +207,6 @@ const myDatabase = [{
     },
     link: "https://goo.gl/maps/61WZCMT5jFwEzftQ9"
 }];
-*/
-
-let myDatabase = [];
 
 function createBlock(galleryElement, location) {
 
@@ -218,9 +214,11 @@ function createBlock(galleryElement, location) {
 
     card.classList.add("card");
 
+    // <img src="assets/images/gallery/${location.image}" alt="${location.name}" />
+
     card.innerHTML = `
-        <div class="gallery-picture">
-            <img src="assets/images/gallery/${location.image}" alt="${location.name}" />
+        <div class="gallery-picture">            
+            <img src="${location.urlImage}" alt="${location.name}" />
             <div class="gallery-ellipse">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 26.6875L13.1875 25.0375C6.75 19.2 2.5 15.35 2.5 10.625C2.5 6.775 5.525 3.75 9.375 3.75C11.55 3.75 13.6375 4.7625 15 6.3625C16.3625 4.7625 18.45 3.75 20.625 3.75C24.475 3.75 27.5 6.775 27.5 10.625C27.5 15.35 23.25 19.2 16.8125 25.05L15 26.6875Z" fill="#AFAFAF"/>
@@ -262,7 +260,8 @@ function createGallery(database, galleryEl, filter = 0) {
 
         database = database.filter((item) => {
 
-            return item.categoryId.includes(Number(filter));
+            // return item.categoryId.includes(Number(filter));
+            return item.category.includes(Number(filter));
 
         });
 
@@ -329,6 +328,49 @@ function removeActive(elements) {
     });
 }
 
+document.querySelectorAll(".carousel-gallery").forEach((el) => {
+
+    createGallery(myDatabase, el);
+
+});
+
+initSlider();
+
+document.querySelectorAll('.links-slider li a').forEach(linkElement => {
+
+    linkElement.addEventListener("click", (e) => {
+
+        e.preventDefault();
+    
+        const container = linkElement.closest("div.carousel-container");
+    
+        const currentGallery = container.querySelector(".carousel-gallery");
+    
+        document.querySelectorAll(".carousel-container .links-slider a").forEach((element) => {
+            element.classList.remove("active");
+        });
+    
+        linkElement.classList.add("active");
+    
+        $(currentGallery).slick("unslick");
+    
+        currentGallery.innerHTML = "";
+
+        const category = linkElement.dataset.location;
+    
+        // const categoryId = (category.id !== 1) ? category.id : 0;
+        // const categoryId = (category !== 1) ? category : 0;
+    
+        // createGallery(myDatabase, currentGallery, categoryId);
+        createGallery(myDatabase, currentGallery, category);
+    
+        initSlider();
+    
+    });
+
+})
+
+/*
 // AXIOS
 const apiUrl = "https://besp.westus3.cloudapp.azure.com";
 
@@ -409,3 +451,4 @@ async function getCategories() {
 }
 
 getCategories();
+*/
